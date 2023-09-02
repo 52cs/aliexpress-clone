@@ -122,7 +122,7 @@
               -right-[3px] top-0 bg-[#FF4646] h-[17px] min-w-[17px]
               text-xs text-white px-0.5 rounded-full"
             >
-              {{ userStore?.cart.length }}
+              {{ userStore.cart.length }}
             </span>
             <div class="min-w-[40px]">
               <Icon
@@ -156,8 +156,29 @@
 <script setup>
 const userStore = useUserStore()
 
+const client = useSupabaseClient()
+const user = useSupabaseUser()
+
 const isAccountMenu = ref(false)
 const isCartHover = ref(false)
 const isSearching = ref(false)
 const searchItem = ref('')
+const items = ref(null)
+
+const searchByName = useDebounce(async () => {
+    isSearching.value = true
+    items.value = await useFetch(`/api/prisma/search-by-name/${searchItem.value}`)
+    isSearching.value = false
+}, 100)
+
+watch(() => searchItem.value, async () => {
+    if (!searchItem.value) {
+        setTimeout(() => {
+            items.value = ''
+            isSearching.value = false
+            return
+        }, 500)
+    }
+    searchByName()
+})
 </script>

@@ -112,8 +112,7 @@ const priceComputed = computed(() => {
 })
 
 const images = ref([
-    //'',
-    'https://picsum.photos/id/112/800/800',
+    '',
     'https://picsum.photos/id/212/800/800',
     'https://picsum.photos/id/233/800/800',
     'https://picsum.photos/id/165/800/800',
@@ -121,9 +120,11 @@ const images = ref([
     'https://picsum.photos/id/144/800/800',
 ])
 
+onBeforeMount(async () => {
+    setTimeout(() => userStore.isLoading = false, 1000)
+})
+
 const addToCart = () => {
-    //userStore.cart.push(product.value.data)
-    userStore.cart.push({id: route.params.id})
-    alert("Added")
+    userStore.cart.push(product.value.data)
 }
 </script>

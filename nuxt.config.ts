@@ -7,10 +7,13 @@ export default defineNuxtConfig({
         '@pinia/nuxt',
         '@pinia-plugin-persistedstate/nuxt',
         '@nuxtjs/tailwindcss',
-        //'@nuxtjs/supabase'
+        '@nuxtjs/supabase'
     ],
     imports: {
-      dirs: ['stores']
+        dirs: ['stores']
+    },
+    supabase: {
+        redirect: false,
     },
     runtimeConfig: {
         public: {
